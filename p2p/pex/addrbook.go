@@ -463,10 +463,12 @@ ADDRS_LOOP:
 
 // ListOfKnownAddresses returns the new and old addresses.
 func (a *addrBook) ListOfKnownAddresses() []*knownAddress {
-	addrs := []*knownAddress{}
 	a.mtx.Lock()
-	for _, addr := range a.addrLookup {
-		addrs = append(addrs, addr.copy())
+	addrs := make([]*knownAddress, a.size())
+	i := 0
+	for _, ka := range a.addrLookup {
+		addrs[i] = ka.copy()
+		i++
 	}
 	a.mtx.Unlock()
 	return addrs
