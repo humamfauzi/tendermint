@@ -292,6 +292,7 @@ func (a *addrBook) PickAddress(biasTowardsNewAddrs int) *p2p.NetAddress {
 func (a *addrBook) MarkGood(addr *p2p.NetAddress) {
 	a.mtx.Lock()
 	defer a.mtx.Unlock()
+
 	ka := a.addrLookup[addr.ID]
 	if ka == nil {
 		return
@@ -306,6 +307,7 @@ func (a *addrBook) MarkGood(addr *p2p.NetAddress) {
 func (a *addrBook) MarkAttempt(addr *p2p.NetAddress) {
 	a.mtx.Lock()
 	defer a.mtx.Unlock()
+
 	ka := a.addrLookup[addr.ID]
 	if ka == nil {
 		return
@@ -516,7 +518,7 @@ func (a *addrBook) getBucket(bucketType byte, bucketIdx int) map[string]*knownAd
 	case bucketTypeOld:
 		return a.bucketsOld[bucketIdx]
 	default:
-		cmn.PanicSanity("Should not happen")
+		panic("Should not happen")
 		return nil
 	}
 }
